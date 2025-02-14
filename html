@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Will You Be My Valentine?</title>
     <style>
         body {
@@ -12,7 +12,7 @@
             height: 100vh;
             background-color: #f8f0f8;
             margin: 0;
-            font-family: 'Aesthetic', sans-serif;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
             position: relative;
         }
@@ -23,13 +23,14 @@
         }
 
         .heart {
-            font-size: 150px;
+            font-size: 20vw;
             color: #f07a9c;
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 40vh;
+            left: 50vw;
             transform: translate(-50%, -50%) scale(2);
             opacity: 1;
+            transition: transform 2s ease-out, opacity 1.5s ease-out;
         }
 
         h1 {
@@ -49,7 +50,6 @@
             transition: background-color 0.3s;
             margin: 10px;
             display: inline-block;
-            position: relative;
             cursor: pointer;
         }
 
@@ -84,15 +84,13 @@
             const valentineText = document.getElementById("valentineText");
 
             setTimeout(() => {
-                heart.style.transition = "transform 2s ease-out, opacity 1.5s ease-out";
                 heart.style.transform = "translate(-50%, -50%) scale(0.5)";
                 heart.style.opacity = "0";
             }, 500);
 
             setTimeout(() => {
-                content.style.transition = "opacity 1.5s ease-in";
                 content.style.opacity = "1";
-                valentineText.style.opacity = "1"; // Ensure the text appears
+                valentineText.style.opacity = "1";
             }, 2000);
         });
 
@@ -101,29 +99,38 @@
             happyMsg.style.display = "block";
             happyMsg.style.opacity = "0";
             happyMsg.style.transition = "opacity 1s ease-in-out";
+
             setTimeout(() => {
                 happyMsg.style.opacity = "1";
+
+                // Try opening Instagram using the intent (best for Android)
                 setTimeout(() => {
-                    window.location.href = "https://www.instagram.com/its._.atlaac?igsh=dTZ5dnZuNGp3djBh&utm_source=qr";
-                }, 2000);
+                    window.location.href = "intent://www.instagram.com/its._.atlaac/#Intent;package=com.instagram.android;scheme=https;end;";
+                }, 1000);
+
+                // Fallback to web version if Instagram app doesn’t open
+                setTimeout(() => {
+                    window.location.href = "https://www.instagram.com/its._.atlaac?igsh=MXVocDltNGQzZG5ocA==";
+                }, 3000);
+
             }, 100);
         });
 
         function moveButton() {
             const noBtn = document.getElementById("noBtn");
-            const maxX = window.innerWidth - noBtn.clientWidth;
-            const maxY = window.innerHeight - noBtn.clientHeight;
+            const maxX = window.innerWidth - noBtn.clientWidth - 20;
+            const maxY = window.innerHeight - noBtn.clientHeight - 20;
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
 
             noBtn.style.position = "absolute";
             noBtn.style.transition = "left 0.3s ease-in-out, top 0.3s ease-in-out";
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
+            noBtn.style.left = randomX + "px";
+            noBtn.style.top = randomY + "px";
         }
 
         document.getElementById("noBtn").addEventListener("mouseover", moveButton);
-        document.getElementById("noBtn").addEventListener("touchstart", moveButton); // For mobile users
+        document.getElementById("noBtn").addEventListener("touchstart", moveButton);
     </script>
 </body>
 </html>
